@@ -2,6 +2,7 @@ package urlparse
 
 import (
 	"fmt"
+	"log"
 	"net/url"
 	"path"
 )
@@ -36,4 +37,13 @@ func isValidPath(urlpath string) bool {
 		return true
 	}
 	return false
+}
+
+func URLMustJoin(server, urlpath string, others ...string) string {
+	fullURL, err := URLJoin(server, urlpath, others...)
+	if err != nil {
+		log.Panic(err)
+	}
+
+	return fullURL
 }
