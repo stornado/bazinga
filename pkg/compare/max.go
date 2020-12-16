@@ -179,3 +179,33 @@ func MaxUint64(a, b uint64, others ...uint64) uint64 {
 
 	return max
 }
+
+func MaxByte(a, b byte, others ...byte) byte {
+	max := a
+	if b > a {
+		max = b
+	}
+
+	for _, other := range others {
+		if other > max {
+			max = other
+		}
+	}
+
+	return max
+}
+
+func MaxRune(a, b rune, others ...rune) rune {
+	max := a
+	if b > a {
+		max = b
+	}
+
+	for _, other := range others {
+		if other > max {
+			max = other
+		}
+	}
+
+	return max
+}

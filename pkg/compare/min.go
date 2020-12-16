@@ -179,3 +179,33 @@ func MinUint64(a, b uint64, others ...uint64) uint64 {
 
 	return min
 }
+
+func MinByte(a, b byte, others ...byte) byte {
+	min := a
+	if b < a {
+		min = b
+	}
+
+	for _, other := range others {
+		if other < min {
+			min = other
+		}
+	}
+
+	return min
+}
+
+func MinRune(a, b rune, others ...rune) rune {
+	min := a
+	if b < a {
+		min = b
+	}
+
+	for _, other := range others {
+		if other < min {
+			min = other
+		}
+	}
+
+	return min
+}
