@@ -1,6 +1,8 @@
 package urlparse
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestURLJoin(t *testing.T) {
 	type args struct {
@@ -35,6 +37,38 @@ func TestURLJoin(t *testing.T) {
 			}
 			if got != tt.want {
 				t.Errorf("URLJoin() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestURLMustJoin(t *testing.T) {
+	type args struct {
+		server  string
+		urlpath string
+		others  []string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{"", args{"https://github.com", "stornado", nil}, "https://github.com/stornado"},
+		{"", args{"https://github.com", "/stornado", nil}, "https://github.com/stornado"},
+		{"", args{"https://github.com/", "/stornado", nil}, "https://github.com/stornado"},
+		{"", args{"https://github.com/stornado", "bazinga", nil}, "https://github.com/stornado/bazinga"},
+		{"", args{"//github.com", "/stornado", nil}, "//github.com/stornado"},
+		{"", args{"https://github.com/golang", "/stornado", nil}, "https://github.com/stornado"},
+		{"", args{"https://github.com", "stornado", []string{"bazinga"}}, "https://github.com/stornado/bazinga"},
+		{"", args{"https://github.com/golang", "/stornado", []string{"bazinga"}}, "https://github.com/stornado/bazinga"},
+		// {"", args{"https://github.com/golang", "https://github.com/stornado", []string{"bazinga"}}, ""},
+		// {"", args{"https://github.com/golang", "//github.com/stornado", []string{"bazinga"}}, ""},
+		// {"", args{"https://github.com/golang", "/stornado", []string{"//github.com/stornado/bazinga"}}, ""},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := URLMustJoin(tt.args.server, tt.args.urlpath, tt.args.others...); got != tt.want {
+				t.Errorf("URLMustJoin() = %v, want %v", got, tt.want)
 			}
 		})
 	}
