@@ -18,10 +18,13 @@ func TestURLJoin(t *testing.T) {
 		{"", args{"https://github.com", "/stornado", nil}, "https://github.com/stornado", false},
 		{"", args{"https://github.com/", "/stornado", nil}, "https://github.com/stornado", false},
 		{"", args{"https://github.com/stornado", "bazinga", nil}, "https://github.com/stornado/bazinga", false},
-		{"", args{"github.com", "/stornado", nil}, "github.com/stornado", false},
 		{"", args{"//github.com", "/stornado", nil}, "//github.com/stornado", false},
-		// Fixme
 		{"", args{"https://github.com/golang", "/stornado", nil}, "https://github.com/stornado", false},
+		{"", args{"https://github.com", "stornado", []string{"bazinga"}}, "https://github.com/stornado/bazinga", false},
+		{"", args{"https://github.com/golang", "/stornado", []string{"bazinga"}}, "https://github.com/stornado/bazinga", false},
+		{"", args{"https://github.com/golang", "https://github.com/stornado", []string{"bazinga"}}, "", true},
+		{"", args{"https://github.com/golang", "//github.com/stornado", []string{"bazinga"}}, "", true},
+		{"", args{"https://github.com/golang", "/stornado", []string{"//github.com/stornado/bazinga"}}, "", true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
