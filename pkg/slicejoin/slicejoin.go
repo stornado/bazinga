@@ -66,7 +66,6 @@ func JoinStringSlice(a, b []string) ([]string, []string, []string, []string, []s
 	return elmOnlyInA, elmOnlyInB, elmBothInAAndB, elmOnlyInAOrBNotBoth, elmEitherInAOrB
 }
 
-
 func JoinIntSlice(a, b []int) ([]int, []int, []int, []int, []int) {
 	allA := make(map[int]struct{})
 	allB := make(map[int]struct{})
